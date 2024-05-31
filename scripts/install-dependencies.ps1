@@ -53,12 +53,25 @@ function Log-Message {
     }
 }
 
+# Function to terminate esbuild if running
+function Stop-Esbuild {
+    $esbuildProcesses = Get-Process esbuild -ErrorAction SilentlyContinue
+    if ($esbuildProcesses) {
+        Write-Host "Terminating running esbuild processes..."
+        $esbuildProcesses | Stop-Process -Force
+    }
+}
+
 # Function to execute a command and log its output
 function Execute-Command {
     param (
         [scriptblock]$Command,
         [string]$LogFile = $LogFilePath  # Use the initial directory path
     )
+
+    # Ensure esbuild is not running before execution
+    Stop-Esbuild
+
     # Execute the command and capture output
     $output = & $Command 2>&1
     $bufferedOutput = @()
