@@ -891,7 +891,11 @@
           "then": {
             "properties": {
               "model": {
-                "enum": ["deepseek-chat", "deepseek-coder"]
+                "enum": [
+                  "deepseek-chat",
+                  "deepseek-coder",
+                  "AUTODETECT",
+                ]
               }
             }
           }
